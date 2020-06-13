@@ -1,0 +1,7 @@
+{
+  "name": "KJHK",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
