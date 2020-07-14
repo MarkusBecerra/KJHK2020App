@@ -53,11 +53,11 @@ const ContactContainer: React.FC = () => {
             <IonCol>
             
             <a href="http://kjhk.org/web/" target="_blank" rel="noopener noreferrer"> 
-                          <img src="../assets/img/kjhk-webs_DS.svg" alt="../assets/icon.png"/>
+                    <img src="../assets/img/kjhk-webs_DS.svg" alt="../assets/icon.png"/>
             </a>
 
-                      <a href="https://www.youtube.com/channel/UCqwb8_dzDRSE5RyrgP0q-tA" target="_blank" rel="noopener noreferrer"> 
-                          <img src="../assets/img/Youtube_DS.svg" alt="../assets/icon.png"/>
+            <a href="https://www.youtube.com/channel/UCqwb8_dzDRSE5RyrgP0q-tA" target="_blank" rel="noopener noreferrer"> 
+                    <img src="../assets/img/Youtube_DS.svg" alt="../assets/icon.png"/>
             </a>
 
             </IonCol>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonItem, IonLabel, IonList, IonListHeader, IonToolbar, IonHeader, IonPage, IonTitle    } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
+import LogsContainer from '../components/LogsContainer';
 
 const Tab2: React.FC = () => {
   return (
@@ -16,7 +17,27 @@ const Tab2: React.FC = () => {
             <IonTitle size="large">Logs</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Logs" />
+ 
+        <IonList>
+          <IonListHeader lines="inset">
+            <IonLabel>Trending</IonLabel>
+          </IonListHeader>
+          <IonItem>
+            <IonLabel color="primary">
+              <h1>harry styles</h1>
+            </IonLabel>
+          </IonItem>
+          <IonItem>
+            <IonLabel color="primary">
+              <h1>christmas</h1>
+            </IonLabel>
+          </IonItem>
+          <IonItem lines="none">
+            <IonLabel color="primary">
+              <h1>falling</h1>
+            </IonLabel>
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
   );
