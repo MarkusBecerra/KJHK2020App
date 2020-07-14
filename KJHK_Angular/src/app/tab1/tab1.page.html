@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Stream
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,5 +13,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <button ion-button full (click)="startAudio()">Start Audio</button>
+    <button ion-button full (click)="stopAudio()" color="danger">Stop Audio</button>
 </ion-content>

@@ -1,3 +1,4 @@
+import { StreamingMedia, StreamingAudioOptions } from '@ionic-native/streaming-media/ngx';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,6 +8,20 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor(private streamingMedia: StreamingMedia) { }
+
+  startAudio() {
+    let options: StreamingAudioOptions = {
+      successCallback: () => { console.log() },
+      errorCallback: () => { console.log() },
+      initFullscreen: false,
+    }
+
+    this.streamingMedia.playAudio('http://kjhkstream.org/stream_low', options);
+  }
+
+  stopAudio() {
+    this.streamingMedia.stopAudio();
+  }
 
 }
