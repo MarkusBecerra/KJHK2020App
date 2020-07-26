@@ -1,8 +1,7 @@
 import React from 'react';
-import { IonButton, IonContent, IonItem, IonLabel, IonList, IonListHeader, IonToolbar, IonHeader, IonPage, IonTitle    } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonToolbar, IonHeader, IonPage, IonTitle } from '@ionic/react';
 import './Tab2.css';
-import LogsContainer from '../components/LogsContainer';
+import Logs from '../components/Logs';
 
 const Tab2: React.FC = () => {
   return (
@@ -17,7 +16,8 @@ const Tab2: React.FC = () => {
             <IonTitle size="large">Logs</IonTitle>
           </IonToolbar>
         </IonHeader>
- 
+        <Logs />
+
         <IonList>
           <IonListHeader lines="inset">
             <IonLabel>Trending</IonLabel>
