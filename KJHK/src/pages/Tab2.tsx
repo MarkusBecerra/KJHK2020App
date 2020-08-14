@@ -1,15 +1,9 @@
-import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonToolbar, IonHeader, IonPage, IonTitle } from '@ionic/react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonToolbar, IonHeader, IonPage, IonTitle, IonRefresher, IonRefresherContent } from '@ionic/react';
+import { RefresherEventDetail } from '@ionic/core';
+import { chevronDownCircleOutline } from 'ionicons/icons';
 import './Tab2.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-export interface MusicLogs {
-  date: Date;
-  logs: Log[];
-}
-
-export interface CurrentDate{
-  date: Date;
-}
 
 export interface Log {
   Artist: string;
@@ -17,66 +11,82 @@ export interface Log {
   Song: string;
   Entry_Date: string;
 }
+
 const Tab2: React.FC = (props) => {
-  const [logs, setLogs ] = useState<Log[]>([]);
-  const [currentDate, setCurrentDate ] = useState<CurrentDate>();
+  const [logs, setLogs] = useState < Log[] > ([]);
+  const [currentMonth, setCurrentMonth] = useState < String > ();
+  const [currentDay, setCurrentDay] = useState < String > ();
+  const fetchData = async () => {
+    const result = await axios(
+      'http://kjhk.org/web/app_resources/appMusicLogs.php?day=0',
+    );
+    setLogs(result.data.logs);
+    let myDate = new Date(result.data.date);
+    setCurrentMonth((myDate.getMonth() + 1).toString());
+    setCurrentDay(myDate.getDate().toString());
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        'http://kjhk.org/web/app_resources/appMusicLogs.php?day=0',
-      );
-      setLogs(result.data.logs);
-      setCurrentDate(result.data.date);
-    };
-  
     fetchData();
   }, []);
 
+
+  function doRefresh(event: CustomEvent < RefresherEventDetail > ) {
+    console.log('Begin async operation');
+    fetchData();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.detail.complete();
+    }, 2000);
+  }
+
+  function getTimeAMPM(mydate: string) {
+    const date = new Date(mydate);
+
+    return date.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    })
+  }
+
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
-        <IonHeader collapse="condense">
+
+        <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+          <IonRefresherContent pullingIcon={chevronDownCircleOutline} pullingText="Pull to refresh"
+            refreshingSpinner="circles" refreshingText="Refreshing...">
+          </IonRefresherContent>
+        </IonRefresher>
+
+
+        <IonHeader>
           <IonToolbar>
-            <IonTitle size="large">KJHK LOGS {currentDate}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        {currentDate}
-        <IonList>
-        {logs.map((log, idx) => (
-          <IonItem key={idx}>
-            <IonLabel>
-              <h2>{log.Song}</h2>
-            <span> {log.Artist} {log.Album} {log.Entry_Date} </span>
-            </IonLabel>
-          </IonItem>
-        ))}
-      </IonList>
 
 
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">KJHK LOGS </IonTitle>
+          </IonToolbar>
+        </IonHeader>
         <IonList>
           <IonListHeader lines="inset">
-            <IonLabel>Trending</IonLabel>
+            <IonLabel>Logs for {currentMonth}/{currentDay}</IonLabel>
           </IonListHeader>
-          <IonItem>
-            <IonLabel color="primary">
-              <h1>harry styles</h1>
+          {logs.map((log, idx) => (
+          <IonItem key={idx}>
+            {getTimeAMPM(log.Entry_Date)}
+            <IonLabel>
+              <h2>{log.Song}</h2>
+              <span> By {log.Artist} From {log.Album} </span>
             </IonLabel>
           </IonItem>
-          <IonItem>
-            <IonLabel color="primary">
-              <h1>christmas</h1>
-            </IonLabel>
-          </IonItem>
-          <IonItem lines="none">
-            <IonLabel color="primary">
-              <h1>falling</h1>
-            </IonLabel>
-          </IonItem>
+          ))}
         </IonList>
+
+
       </IonContent>
     </IonPage>
   );
