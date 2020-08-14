@@ -1,9 +1,37 @@
-import React from 'react';
 import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonToolbar, IonHeader, IonPage, IonTitle } from '@ionic/react';
 import './Tab2.css';
-import Logs from '../components/Logs';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+export interface MusicLogs {
+  date: Date;
+  logs: Log[];
+}
 
-const Tab2: React.FC = () => {
+export interface CurrentDate{
+  date: Date;
+}
+
+export interface Log {
+  Artist: string;
+  Album: string;
+  Song: string;
+  Entry_Date: string;
+}
+const Tab2: React.FC = (props) => {
+  const [logs, setLogs ] = useState<Log[]>([]);
+  const [currentDate, setCurrentDate ] = useState<CurrentDate>();
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'http://kjhk.org/web/app_resources/appMusicLogs.php?day=0',
+      );
+      setLogs(result.data.logs);
+      setCurrentDate(result.data.date);
+    };
+  
+    fetchData();
+  }, []);
+
   return (
     <IonPage>
       <IonHeader>
@@ -13,10 +41,21 @@ const Tab2: React.FC = () => {
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Logs</IonTitle>
+            <IonTitle size="large">KJHK LOGS {currentDate}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Logs />
+        {currentDate}
+        <IonList>
+        {logs.map((log, idx) => (
+          <IonItem key={idx}>
+            <IonLabel>
+              <h2>{log.Song}</h2>
+            <span> {log.Artist} {log.Album} {log.Entry_Date} </span>
+            </IonLabel>
+          </IonItem>
+        ))}
+      </IonList>
+
 
         <IonList>
           <IonListHeader lines="inset">
