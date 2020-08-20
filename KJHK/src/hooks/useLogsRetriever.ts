@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 export function useLogsRetriever() {
 
     const [logs, setLogs ] = useState<Log[]>([]);
-    const [currentDate, setCurrentDate ] = useState<CurrentDate>();
+    const [currentDate, setCurrentDate ] = useState<string>();
 
     useEffect(()=> {
 
@@ -39,7 +39,7 @@ export function useLogsRetriever() {
         async function getDate(): Promise<MusicLogs> {
             const data = await loadLogs<MusicLogs>('http://kjhk.org/web/app_resources/appMusicLogs.php?day=0');
             const m_currentDate = data.date;
-            setCurrentDate({ date: m_currentDate });
+            setCurrentDate(m_currentDate.toString());
             return data;
         }
 
@@ -69,10 +69,6 @@ export function useLogsRetriever() {
 export interface MusicLogs {
     date: Date;
     logs: Log[];
-}
-
-export interface CurrentDate{
-    date: Date;
 }
 
 export interface Log {

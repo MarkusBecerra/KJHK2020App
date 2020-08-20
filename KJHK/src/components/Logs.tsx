@@ -1,23 +1,36 @@
 import React from 'react';
 import './Logs.css';
 import {useLogsRetriever} from '../hooks/useLogsRetriever';
-import { IonGrid, IonRow, IonCol, IonContent } from '@ionic/react';
+import { IonContent, IonItem, IonLabel, IonList, IonListHeader, IonToolbar, IonHeader, IonPage, IonTitle, IonRefresher, IonRefresherContent } from '@ionic/react';
 
 const Logs: React.FC = () => {
     const { logs, currentDate } = useLogsRetriever();
+
+    function getTimeAMPM(mydate: string) {
+    const date = new Date(mydate.replace(/-/g, "/"));
+
+    return date.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    })
+  }
     return (
         <IonContent>
-            <IonGrid>
-                {console.log(currentDate)}
-                <IonRow>
-                    {console.log(logs)}
-                    {/* {logs.map((log, index) => (
-                        <IonCol size="6" key={index}>
-                            {console.log(log.Artist)}
-                        </IonCol>
-                    ))} */}
-                </IonRow>
-            </IonGrid>
+        <IonList>
+          <IonListHeader lines="inset">
+              {currentDate}
+          </IonListHeader>
+          {logs.map((log, idx) => (
+          <IonItem key={idx}>
+            {getTimeAMPM(log.Entry_Date)}
+            <IonLabel>
+              <h2>{log.Song}</h2>
+              <span> By {log.Artist} From {log.Album} </span>
+            </IonLabel>
+          </IonItem>
+          ))}
+        </IonList> 
         </IonContent>
 
         

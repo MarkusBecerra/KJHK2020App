@@ -4,6 +4,7 @@ import { chevronDownCircleOutline } from 'ionicons/icons';
 import './Tab2.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Logs from '../components/Logs'
 
 export interface Log {
   Artist: string;
@@ -12,7 +13,7 @@ export interface Log {
   Entry_Date: string;
 }
 
-const Tab2: React.FC = (props) => {
+const Tab2: React.FC = () => {
   const [logs, setLogs] = useState < Log[] > ([]);
   const [currentMonth, setCurrentMonth] = useState < String > ();
   const [currentDay, setCurrentDay] = useState < String > ();
@@ -21,7 +22,7 @@ const Tab2: React.FC = (props) => {
       'http://kjhk.org/web/app_resources/appMusicLogs.php?day=0',
     );
     setLogs(result.data.logs);
-    let myDate = new Date(result.data.date);
+    let myDate = new Date(result.data.date.replace(/-/g, "/"));
     setCurrentMonth((myDate.getMonth() + 1).toString());
     setCurrentDay(myDate.getDate().toString());
   };
@@ -32,7 +33,7 @@ const Tab2: React.FC = (props) => {
 
   function doRefresh(event: CustomEvent < RefresherEventDetail > ) {
     console.log('Begin async operation');
-    fetchData();
+    //fetchData();
     setTimeout(() => {
       console.log('Async operation has ended');
       event.detail.complete();
@@ -40,7 +41,7 @@ const Tab2: React.FC = (props) => {
   }
 
   function getTimeAMPM(mydate: string) {
-    const date = new Date(mydate);
+    const date = new Date(mydate.replace(/-/g, "/"));
 
     return date.toLocaleString('en-US', {
       hour: 'numeric',
@@ -52,6 +53,11 @@ const Tab2: React.FC = (props) => {
   return (
     <IonPage>
       <IonContent>
+      <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">KJHK LOGS </IonTitle>
+          </IonToolbar>
+        </IonHeader>
 
         <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
           <IonRefresherContent pullingIcon={chevronDownCircleOutline} pullingText="Pull to refresh"
@@ -59,18 +65,6 @@ const Tab2: React.FC = (props) => {
           </IonRefresherContent>
         </IonRefresher>
 
-
-        <IonHeader>
-          <IonToolbar>
-          </IonToolbar>
-        </IonHeader>
-
-
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">KJHK LOGS </IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <IonList>
           <IonListHeader lines="inset">
             <IonLabel>Logs for {currentMonth}/{currentDay}</IonLabel>
