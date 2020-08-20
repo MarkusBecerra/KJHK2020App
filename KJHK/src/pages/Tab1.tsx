@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import {Howl, Howler} from 'howler';
+import ReactHowler from 'react-howler'
+import ReactAudioPlayer from 'react-audio-player';
 import './Tab1.css';
 
 const Tab1: React.FC = () => {
+  const [play, setPlay] = useState<boolean>(false)
   function soundPlay() {
-    const Sounds = new Howl({
-      src: ["http://kjhkstream.org:8000/stream_low"]
-    })
-    Sounds.play()
+   var player = new Howl({
+      src: 'http://kjhkstream.org:8000/stream_low',
+      html5: true,
+      preload: 'metadata',
+      });
+    player.play();
     console.log("sound")
   }
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
+        <IonTitle size="large">Listen</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -24,9 +30,23 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Listen</IonTitle>
           </IonToolbar>
         </IonHeader>
-      <audio controls>
-	      <source src="http://kjhkstream.org:8000/stream_high" />
-      </audio>
+        <div>
+      <ReactHowler src='http://kjhkstream.org:8000/stream_low' html5={true} playing={play} />
+      <button onClick={() => setPlay(!play)}>
+        { play ? 'Pause' : 'Play' }
+      </button>
+    </div>
+
+
+        {/* <ReactAudioPlayer
+          src="http://kjhkstream.org:8000/stream_low"
+          autoPlay
+          controls
+        /> */}
+
+             {/* <div className="App">
+        <button onClick={soundPlay}>play</button>
+      </div> */}
       </IonContent>
     </IonPage>
   );

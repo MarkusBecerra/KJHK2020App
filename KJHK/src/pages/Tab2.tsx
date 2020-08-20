@@ -53,17 +53,18 @@ const Tab2: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
-      <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">KJHK LOGS </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
+        
         <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
           <IonRefresherContent pullingIcon={chevronDownCircleOutline} pullingText="Pull to refresh"
             refreshingSpinner="circles" refreshingText="Refreshing...">
           </IonRefresherContent>
         </IonRefresher>
+
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">KJHK LOGS</IonTitle>
+          </IonToolbar>
+        </IonHeader>
 
         <IonList>
           <IonListHeader lines="inset">
