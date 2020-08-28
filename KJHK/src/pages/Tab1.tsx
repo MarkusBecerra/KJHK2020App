@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import {Howl, Howler} from 'howler';
-import ReactHowler from 'react-howler'
+import ReactHowler from 'react-howler';
+import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
 import './Tab1.css';
 
 const Tab1: React.FC = () => {
-  const [play, setPlay] = useState<boolean>(false)
+  const [play, setPlay] = useState<boolean>(false);
+  const [currentSong, setCurrentSong] = useState<String>();
+  const [currentArtist, setCurrentArtist] = useState<String>();
+  const fetchData = async () => {
+    const result = await axios(
+      'http://kjhk.org/web/app_resources/nowPlaying.php',
+    );
+    setCurrentSong(result.data.song.toString());
+    setCurrentArtist(result.data.artist.toString());
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   function soundPlay() {
    var player = new Howl({
       src: 'http://kjhkstream.org:8000/stream_low',
@@ -48,6 +62,10 @@ const Tab1: React.FC = () => {
         <button onClick={soundPlay}>play</button>
       </div> */}
       </IonContent>
+      <div>
+        {currentSong}
+        {currentArtist}
+      </div>
     </IonPage>
   );
 };
