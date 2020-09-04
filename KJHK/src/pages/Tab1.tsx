@@ -22,6 +22,10 @@ const Tab1: React.FC = () => {
     fetchData();
   }, []);
 
+  setInterval(function(){
+    fetchData()
+  }, 30000)
+
   function soundPlay() {
    var player = new Howl({
       src: 'http://kjhkstream.org:8000/stream_low',
@@ -31,6 +35,7 @@ const Tab1: React.FC = () => {
     player.play();
     console.log("sound")
   }
+  
   return (
     <IonPage>
       <IonHeader>

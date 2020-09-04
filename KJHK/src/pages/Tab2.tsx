@@ -4,7 +4,6 @@ import { chevronDownCircleOutline } from 'ionicons/icons';
 import './Tab2.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Logs from '../components/Logs'
 
 export interface Log {
   Artist: string;
@@ -21,19 +20,22 @@ const Tab2: React.FC = () => {
     const result = await axios(
       'http://kjhk.org/web/app_resources/appMusicLogs.php?day=0',
     );
-    setLogs(result.data.logs);
+     const filteredLogs = result.data.logs.filter(function(entry: Log){
+      return(entry.Song !== "")
+    });
+    setLogs(filteredLogs);
     let myDate = new Date(result.data.date.replace(/-/g, "/"));
     setCurrentMonth((myDate.getMonth() + 1).toString());
     setCurrentDay(myDate.getDate().toString());
   };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-
   function doRefresh(event: CustomEvent < RefresherEventDetail > ) {
     console.log('Begin async operation');
-    //fetchData();
+    fetchData();
     setTimeout(() => {
       console.log('Async operation has ended');
       event.detail.complete();
@@ -70,12 +72,14 @@ const Tab2: React.FC = () => {
           <IonListHeader lines="inset">
             <IonLabel>Logs for {currentMonth}/{currentDay}</IonLabel>
           </IonListHeader>
+          {/* {logs.filter(isEmptySong)} */}
           {logs.map((log, idx) => (
           <IonItem key={idx}>
             {getTimeAMPM(log.Entry_Date)}
             <IonLabel>
               <h2>{log.Song}</h2>
-              <span> By {log.Artist} From {log.Album} </span>
+              <h2> By {log.Artist} </h2> 
+              <h2> From {log.Album} </h2>
             </IonLabel>
           </IonItem>
           ))}
