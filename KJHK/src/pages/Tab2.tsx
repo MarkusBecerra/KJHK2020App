@@ -3,7 +3,6 @@ import { RefresherEventDetail } from '@ionic/core';
 import { chevronDownCircleOutline } from 'ionicons/icons';
 import './Tab2.css';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 export interface Log {
   Artist: string;
@@ -17,14 +16,14 @@ const Tab2: React.FC = () => {
   const [currentMonth, setCurrentMonth] = useState < String > ();
   const [currentDay, setCurrentDay] = useState < String > ();
   const fetchData = async () => {
-    const result = await axios(
+    const result = await fetch(
       'http://kjhk.org/web/app_resources/appMusicLogs.php?day=0',
-    );
-     const filteredLogs = result.data.logs.filter(function(entry: Log){
+    ).then(response => response.json());
+     const filteredLogs = result.logs.filter(function(entry: Log){
       return(entry.Song !== "")
     });
     setLogs(filteredLogs);
-    let myDate = new Date(result.data.date.replace(/-/g, "/"));
+    let myDate = new Date(result.date.replace(/-/g, "/"));
     setCurrentMonth((myDate.getMonth() + 1).toString());
     setCurrentDay(myDate.getDate().toString());
   };

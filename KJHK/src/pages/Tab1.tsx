@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import {Howl, Howler} from 'howler';
 import ReactHowler from 'react-howler';
-import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
 import './Tab1.css';
+import NowPlayingContext from './NowPlayingContext';
+
 
 const Tab1: React.FC = () => {
+  const context = useContext(NowPlayingContext)
   const [play, setPlay] = useState<boolean>(false);
   const [currentSong, setCurrentSong] = useState<String>();
   const [currentArtist, setCurrentArtist] = useState<String>();
   const fetchData = async () => {
-    const result = await axios(
-      'http://kjhk.org/web/app_resources/nowPlaying.php',
-    );
-    setCurrentSong(result.data.song.toString());
-    setCurrentArtist(result.data.artist.toString());
+    const result = await fetch(
+      'https://kjhk.org/web/app_resources/nowPlaying.php',
+    ).then(response=> response.json());
+    setCurrentSong(result.song.toString());
+    setCurrentArtist(result.artist.toString());
   };
   useEffect(() => {
     fetchData();
@@ -28,7 +30,7 @@ const Tab1: React.FC = () => {
 
   function soundPlay() {
    var player = new Howl({
-      src: 'http://kjhkstream.org:8000/stream_low',
+     src: 'https://streamingv2.shoutcast.com/kjhk_128.mp3',
       html5: true,
       preload: 'metadata',
       });
@@ -50,7 +52,7 @@ const Tab1: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <div>
-      <ReactHowler src='http://kjhkstream.org:8000/stream_low' html5={true} playing={play} />
+          <ReactHowler src='https://streamingv2.shoutcast.com/kjhk_128.mp3' html5={true} playing={play} />
       <button onClick={() => setPlay(!play)}>
         { play ? 'Pause' : 'Play' }
       </button>
@@ -59,13 +61,13 @@ const Tab1: React.FC = () => {
 
         {/* <ReactAudioPlayer
           src="http://kjhkstream.org:8000/stream_low"
-          autoPlay
           controls
         /> */}
 
-             {/* <div className="App">
+             <div className="App">
         <button onClick={soundPlay}>play</button>
-      </div> */}
+          <audio src="https://streamingv2.shoutcast.com/kjhk_128.mp3" controls></audio>
+      </div>
       </IonContent>
       <div>
         {currentSong}
