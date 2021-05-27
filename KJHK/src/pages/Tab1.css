@@ -1,0 +1,17 @@
+ion-content {
+    --background: url(/assets/02_Now_Playing/NowPlayingBackground.jpg) no-repeat center/cover fixed;
+}
+
+.playButton {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    background: transparent;
+}
+
+.playButtonImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}

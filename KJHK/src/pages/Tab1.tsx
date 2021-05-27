@@ -62,7 +62,8 @@ const Tab1: React.FC = () => {
         </IonHeader>
         <div>
           <ReactHowler src='https://streamingv2.shoutcast.com/kjhk_128.mp3' html5={true} playing={play} />
-          <button onClick={() => setPlay(!play)}>
+          <button className = "playButton" onClick={() => setPlay(!play)}>
+            <img className = "playButtonImg" src= "../assets/02_Now_Playing/SVG/Play_Button.svg"></img>
             {play ? 'Pause' : 'Play'}
           </button>
         </div>
