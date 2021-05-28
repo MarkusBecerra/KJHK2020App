@@ -77,11 +77,11 @@ const Tab1: React.FC = () => {
         <button onClick={soundPlay}>play</button>
           <audio src="https://streamingv2.shoutcast.com/kjhk_128.mp3" controls></audio>
       </div> */}
+        <div>
+          {currentSong}
+          {currentArtist}
+        </div>
       </IonContent>
-      <div>
-        {currentSong}
-        {currentArtist}
-      </div>
     </IonPage>
   );
 };
