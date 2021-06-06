@@ -2,16 +2,46 @@ ion-content {
     --background: url(/assets/02_Now_Playing/NowPlayingBackground.jpg) no-repeat center/cover fixed;
 }
 
+/*Sizing of playbutton differs from the image I use. Not really sure how to change that.*/
 .playButton {
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     width: 50%;
-    padding: 10px;
     background: transparent;
+    size: 50px;
 }
 
 .playButtonImg {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    /*centering might be a little bit off*/
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     width: 50%;
+}
+
+.currentSong {
+    /*centering might be a little bit off*/
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 50%;
+    /* don't know the font */
+    font-family: 'staatlitches';
+}
+
+.currentArtist {
+    font-size: 20px;
+    /*centering might be a little bit off*/
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 50%;
+    /* don't know the font */
+    font-family: 'staatlitches';
 }

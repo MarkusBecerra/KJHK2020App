@@ -62,9 +62,8 @@ const Tab1: React.FC = () => {
         </IonHeader>
         <div>
           <ReactHowler src='https://streamingv2.shoutcast.com/kjhk_128.mp3' html5={true} playing={play} />
-          <button className = "playButton" onClick={() => setPlay(!play)}>
-            <img className = "playButtonImg" src= "../assets/02_Now_Playing/SVG/Play_Button.svg"></img>
-            {play ? 'Pause' : 'Play'}
+          <button className = "playButton" onClick={() => setPlay(!play) }>
+            {play ? <img className = "playButtonImg" src= "../assets/02_Now_Playing/SVG/pauseButton.svg"></img> : <img className = "playButtonImg" src= "../assets/02_Now_Playing/SVG/Play_Button.svg"></img>}
           </button>
         </div>
 
@@ -78,8 +77,12 @@ const Tab1: React.FC = () => {
           <audio src="https://streamingv2.shoutcast.com/kjhk_128.mp3" controls></audio>
       </div> */}
         <div>
-          {currentSong}
-          {currentArtist}
+          <div className = "currentSong">
+            {currentSong}
+          </div>
+          <div className = "currentArtist">
+            {currentArtist}
+          </div>
         </div>
       </IonContent>
     </IonPage>
